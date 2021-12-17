@@ -1,5 +1,5 @@
 # YouTube-Downloader
-This is my own YouTube Downloader .I'm still a beginner so it's not perfect and still has some not so good features or even has bugs.   +
+This is my own YouTube Downloader .I'm still a beginner so it's not perfect and still has some not so good features or even has bugs.
 
 Technical detail: 
 - 360p and 720p 
