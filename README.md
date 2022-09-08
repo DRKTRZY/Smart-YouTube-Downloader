@@ -5,9 +5,9 @@ Technical detail:
 - 360p and 720p 
 - MP4 and MP3
 - Short download time 
-- With a simple and clear GUI
+- User-friendly GUI
 
 Disadvantages:
 - No Full HD
-- Not enough features
-- Only one available language in the application
+- No progress bar
+- Look like a Application from 2002 (have not a modern GUI)
