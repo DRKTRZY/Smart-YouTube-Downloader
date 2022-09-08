@@ -3,19 +3,10 @@ from pytube import YouTube
 import tkinter.messagebox
 import ttk
 import tkinter as tk
+from tkinter import filedialog
 import os
 import pygame
 import random
-
-# Path
-path = r"C:\DownloadsMP4"
-if not os.path.exists(path):
-    os.makedirs(path)
-path_mp3 = r"C:\DownloadsMP3"
-if not os.path.exists(path):
-    os.makedirs(path)
-mp3_path = "C:\DownloadsMP3"
-mp4_path = "C:\DownloadsMP4"
 
 # Window
 window = tk.Tk()
@@ -23,7 +14,7 @@ window.geometry("500x300")
 window.resizable(0, 0)
 window.title("Youtube MP4 and MP3 Downloader")
 window.configure(bg="#3f3f3f")
-window.iconbitmap('C:\YouTube MP4 Downloader\images/icon1.ico')
+window.iconbitmap('images/icon1.ico')
 
 # Label Title
 mp4_title = tk.Label(window, text='YouTube MP4 and MP3 Downloader', font="Bahnschrift", fg="#d3d3d3")
@@ -36,39 +27,34 @@ link = tk.StringVar()
 link_label = tk.Label(window, text="Paste link here:", font="Bahnschrift", fg="#d3d3d3")
 link_label.place(x=185, y=60)
 link_label.configure(bg="#3f3f3f")
-link_error = tk.Entry(window, width=70, fg="#2a2a2a", textvariable=link)
-link_error.place(x=32, y=90)
-link_error.configure(bg="#fbfbfb")
+entry = tk.Entry(window, width=70, fg="#2a2a2a", textvariable=link,bg="#fbfbfb")
+entry.place(x=32, y=90)
 
 # Functions
 def downloader():
     global resolution
+    path = filedialog.askdirectory(title="Select Directory")
     url = YouTube(str(link.get()))
     video = url.streams.get_by_resolution(resolution.get())
     video.download(path)
-    bestätigung = tk.Label(window, text="Download Successful!", font=("Bahnschrift", 16, "bold"), fg="orange")
-    bestätigung.place(x=155, y=230)
-    bestätigung.configure(bg="#3f3f3f")
-    window.after(2800, bestätigung.destroy)
-    msg_box = tk.messagebox.askquestion("YouTube Mp4 and MP3 Downloader", "The file is located in the folder C:\DownloadsMP4                      Do you want to open this folder")
-    if msg_box == 'yes':
-        webbrowser.open(os.path.realpath(mp4_path))
 
+    confirmation = tk.Label(window, text="Download Successful!", font=("Bahnschrift", 16, "bold"), fg="orange")
+    confirmation.place(x=155, y=230)
+    confirmation.configure(bg="#3f3f3f")
+    window.after(2800, confirmation.destroy)
+    entry.delete(0, tk.END)
 def downloader_mp3():
+    path = filedialog.askdirectory(title="Select Directory")
     url = YouTube(str(link.get()))
     video = url.streams.filter(only_audio=True).first()
-    downloaded_file = video.download(path_mp3)
+    downloaded_file = video.download(path)
     base, ext = os.path.splitext(downloaded_file)
     new_file = base + ".mp3"
     os.rename(downloaded_file, new_file)
-    bestätigung_mp3 = tk.Label(window, text="Download Successful!", font=("Bahnschrift", 16, "bold"), fg="orange")
-    bestätigung_mp3.place(x=155, y=230)
-    bestätigung_mp3.configure(bg="#3f3f3f")
-    window.after(2800, bestätigung_mp3.destroy)
-    msg_box = tk.messagebox.askquestion("YouTube Mp4 and MP3 Downloader", "The file is located in the folder C:\DownloadsMP3                      Do you want to open this folder")
-    if msg_box == 'yes':
-        webbrowser.open(os.path.realpath(mp3_path))
-
+    confirmation = tk.Label(window, text="Download Successful!", font=("Bahnschrift", 16, "bold"), fg="orange")
+    confirmation.place(x=155, y=230)
+    confirmation.configure(bg="#3f3f3f")
+    window.after(2800, confirmation.destroy)
 def creator_link(url):
     webbrowser.open_new(url)
 
@@ -119,7 +105,7 @@ custom_button(185, 155, "DOWNLOAD MP3", "orange", "#3f3f3f", downloader_mp3)
 pygame.mixer.init()
 
 def jukebox(event):
-    music = ["C:\YouTube MP4 Downloader\Sound/Flamewall.mp3","C:\YouTube MP4 Downloader\Sound/pvrnormal.mp3"]
+    music = ["Sound/Flamewall.mp3","Sound/pvrnormal.mp3"]
     random_music = random.choice(music)
     pygame.mixer.music.load(random_music)
     pygame.mixer.music.play()
