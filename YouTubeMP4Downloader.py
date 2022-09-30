@@ -10,7 +10,7 @@ import random
 # Window
 window = tk.Tk()
 window.geometry("500x300")
-window.resizable(0, 0)
+window.resizable(0,0)
 window.title("SYD")
 window.configure(bg="#282828")
 window.iconbitmap('images/icon1.ico')
