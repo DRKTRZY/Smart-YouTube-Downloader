@@ -30,35 +30,43 @@ entry = tk.Entry(window, width=70, fg="#ffffff", textvariable=link,bg="#202020",
 entry.config(highlightbackground="#313131", highlightcolor="#3ea6ff")
 
 entry.place(relx=0.5,y=90,anchor=tk.CENTER)
-
 # Functions
 def downloader():
-    global resolution
-    path = filedialog.askdirectory(title="Select Directory")
-    url = YouTube(str(link.get()))
-    video = url.streams.get_by_resolution(resolution.get())
-    video.download(path)
+    while 0 < 1:
+        global resolution
+        path = filedialog.askdirectory(title="Select Directory")
+        url = YouTube(str(link.get()))
+        if path == "":
+            break
+        video = url.streams.get_by_resolution(resolution.get())
+        video.download(path)
 
-    confirmation = tk.Label(window, text="Download Successful!", font=("YTSans", 16), fg="#FF0000")
-    confirmation.place(relx=0.5,y=230,anchor=tk.CENTER)
-    confirmation.configure(bg="#282828")
-    window.after(2800, confirmation.destroy)
-    entry.delete(0, tk.END)
+        confirmation = tk.Label(window, text="Download Successful!", font=("YTSans", 16), fg="#FF0000")
+        confirmation.place(relx=0.5,y=230,anchor=tk.CENTER)
+        confirmation.configure(bg="#282828")
+        window.after(2800, confirmation.destroy)
+        entry.delete(0, tk.END)
+
+        break
 
 def downloader_mp3():
-    path = filedialog.askdirectory(title="Select Directory")
-    url = YouTube(str(link.get()))
-    video = url.streams.filter(only_audio=True).first()
-    downloaded_file = video.download(path)
-    base, ext = os.path.splitext(downloaded_file)
-    new_file = base + ".mp3"
-    os.rename(downloaded_file, new_file)
+    while 0 < 1:
+        path = filedialog.askdirectory(title="Select Directory")
+        url = YouTube(str(link.get()))
+        if path == "":
+            break
+        video = url.streams.filter(only_audio=True).first()
+        downloaded_file = video.download(path)
+        base, ext = os.path.splitext(downloaded_file)
+        new_file = base + ".mp3"
+        os.rename(downloaded_file, new_file)
 
-    confirmation = tk.Label(window, text="Download Successful!", font=("YTSans", 16,), fg="FF0000")
-    confirmation.place(relx=0.5,y=230,anchor=tk.CENTER)
-    confirmation.configure(bg="#282828")
+        confirmation = tk.Label(window, text="Download Successful!", font=("YTSans", 16,), fg="FF0000")
+        confirmation.place(relx=0.5,y=230,anchor=tk.CENTER)
+        confirmation.configure(bg="#282828")
+        window.after(3500, confirmation.destroy)
 
-    window.after(3500, confirmation.destroy)
+        break
 def creator_link(url):
     webbrowser.open_new(url)
 
@@ -83,7 +91,6 @@ creator = tk.Label(window, text="Creator: DRKTRZY", fg="#d3d3d3", cursor="hand2"
 creator.place(x=400, y=280)
 creator.configure(bg="#282828")
 creator.bind("<Button-1>", lambda e: creator_link("https://github.com/DRKTRZY"))
-
 # Hover Button
 def custom_button(x, y, anchor,text, bcolor, fcolor, downloader):
     def on_enter(e):
@@ -102,10 +109,8 @@ def custom_button(x, y, anchor,text, bcolor, fcolor, downloader):
 
 custom_button(0.5, 120, tk.CENTER, "DOWNLOAD MP4", "#FF0000", "#282828", downloader)
 custom_button(0.5, 155,tk.CENTER, "DOWNLOAD MP3", "#FF0000", "#282828", downloader_mp3)
-
 # Secret Sound
 pygame.mixer.init()
-
 def jukebox(event):
     music = ["sound/Flamewall.mp3","sound/pvrnormal.mp3"]
     random_music = random.choice(music)
