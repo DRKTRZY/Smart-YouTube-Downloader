@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ee423b3-9ced-4f94-8f2f-7edd8ddaf212" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/YouTube-Downloader.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SYD.exe" beforeDir="false" afterPath="$PROJECT_DIR$/SYD.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YouTubeMP4Downloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/YouTubeMP4Downloader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
