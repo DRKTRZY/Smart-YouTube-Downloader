@@ -14,6 +14,7 @@ window.resizable(0, 0)
 window.title("SYD")
 window.configure(bg="#282828")
 window.iconbitmap('images/icon1.ico')
+window.iconbitmap('images/icon1.ico')
 
 # Label Title
 mp4_title = tk.Label(window, text='Smart YouTube Downloader', font=("YTSans Bold", 14), fg="#FF0000")
