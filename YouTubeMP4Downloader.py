@@ -13,8 +13,7 @@ window.geometry("500x300")
 window.resizable(0, 0)
 window.title("SYD")
 window.configure(bg="#282828")
-window.iconbitmap('images/icon1.ico')
-window.iconbitmap('images/icon1.ico')
+window.iconbitmap('resources/SYDApp.ico')
 
 # Label Title
 mp4_title = tk.Label(window, text='Smart YouTube Downloader', font=("YTSans Bold", 14), fg="#FF0000")
@@ -61,10 +60,9 @@ def downloader_mp3():
         if path == "":
             break
         video = url.streams.filter(only_audio=True).first()
-        downloaded_file = video.download(path)
-        base, ext = os.path.splitext(downloaded_file)
-        new_file = base + ".mp3"
-        os.rename(downloaded_file, new_file)
+        video.download(path)
+
+
 
         confirmation = tk.Label(window, text="Download Successful!", font=("YTSans", 16,), fg="#FF0000")
         confirmation.place(relx=0.5, y=230, anchor=tk.CENTER)
@@ -125,7 +123,7 @@ pygame.mixer.init()
 
 
 def jukebox(event):
-    music = ["sound/Flamewall.mp3", "sound/pvrnormal.mp3"]
+    music = ["resources/sound/Flamewall.mp3", "resources/sound/pvrnormal.mp3", "resources/sound/Aa.mp3"]
     random_music = random.choice(music)
     pygame.mixer.music.load(random_music)
     pygame.mixer.music.play()
