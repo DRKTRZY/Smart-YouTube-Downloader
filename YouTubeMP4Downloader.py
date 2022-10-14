@@ -4,8 +4,6 @@ from pytube import YouTube
 from tkinter import filedialog
 from PIL import ImageTk,Image
 
-
-
 # Window
 window = tk.Tk()
 window.geometry("595x540")
@@ -16,7 +14,6 @@ window.iconbitmap('resources/SYDApp.ico')
 
 # Enter URL
 link = tk.StringVar()
-
 
 # Functions
 
@@ -46,7 +43,7 @@ def test():
 
 
         return image
-
+    
 def on_entry_click(event):
     """function that gets called whenever entry is clicked"""
     if entry.get() == 'Enter URL':
