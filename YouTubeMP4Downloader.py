@@ -1,5 +1,5 @@
 import tkinter as tk
-import os, pygame, random, ttk, webbrowser, tkinter.messagebox, urllib.request, io
+import os, pygame, random, ttk, webbrowser, tkinter.messagebox, urllib.request, io, urllib.parse,pyautogui
 from pytube import YouTube
 from tkinter import filedialog
 from PIL import ImageTk,Image
@@ -17,30 +17,68 @@ link = tk.StringVar()
 
 # Functions
 
-def test():
+# Hover Button
+def custom_button(x, y, anchor,text, bcolor, fcolor, downloader):
+    def on_enter(e):
+        download_button["background"] = bcolor
+        download_button["foreground"] = fcolor
+
+    def on_leave(e):
+        download_button["background"] = fcolor
+        download_button["foreground"] = bcolor
+
+    download_button = tk.Button(set_frame, text=text, font=("YTSans 10"), fg=bcolor, bg=fcolor, border=0,activeforeground=fcolor, activebackground=bcolor, command=downloader)
+    download_button.bind("<Enter>", on_enter)
+    download_button.bind("<Leave>", on_leave)
+    download_button.place(relx=x, rely=y, anchor=anchor,width=100,height=30)
+
+def search_url(event):
     while 0 < 1:
         global image
         global thumbnail
         global inf_frame
         clearFrame()
-        if link.get() == "":
+        if link.get() == "Enter URL":
             tkinter.messagebox.showerror("Error", "Please enter a valid link")
             break
         url = YouTube(link.get()).thumbnail_url
+        url = url.replace("sddefault.jpg", "maxresdefault.jpg")
         with urllib.request.urlopen(url) as connection:
             raw_data = connection.read()
         im = Image.open(io.BytesIO(raw_data))
-        image = ImageTk.PhotoImage(im)
+        img = im.resize((425,239))
+        image = ImageTk.PhotoImage(img)
         widget = tk.Label(thumbnail,image=image)
         widget.pack()
         title_url = YouTube(link.get()).title
         channel_url = YouTube(link.get()).author
-        print(channel_url)
-        print(title_url)
-        title = tk.Label(inf_frame,text=title_url,font=("YTSans 12 bold"),fg="red",bg="#282828")
-        title.place(relx=0.,rely=0.1,width=118,height=35)
-        channel = tk.Label(inf_frame,text=title_url,font=("YTSans 12 bold"),fg="red",bg="#282828")
-
+        time_url = YouTube(link.get()).length
+        print(time_url)
+        length_time = len(str(time_url))
+        print(length_time)
+        if length_time < 2:
+            time_url = f"000{time_url}"
+        elif length_time < 3 and time_url < 60:
+            time_url = f"00{time_url}"
+        time = ([str(i) for i in str(time_url)])
+        time.insert(2,":")
+        time = "".join(time)
+        title = tk.Label(inf_frame,text=title_url,font=("YTSans 12 bold"),anchor="sw",fg="#FF0000",bg="#282828")
+        title.place(relx=0.,rely=0,width=425,height=25)
+        channel = tk.Label(inf_frame,text=channel_url,font=("YTSans 10"),fg="#FF0000",bg="#282828",anchor="sw")
+        channel.place(relx=0.,rely=0.5,width=212.5,height=25)
+        length = tk.Label(inf_frame,text=time,font=("YTSans 10"),fg="#FF0000",bg="#282828",anchor="sw")
+        if time_url > 60:
+            print(length_time)
+            m, s = divmod(int(time_url), 60)
+            h, m = divmod(m, 60)
+            hour = f'{h:d}:{m:02d}:{s:02d}'
+            length.configure(text=hour)
+        length.place(relx=0.52,rely=0.5,width=212.5,height=25)
+        format_label = tk.Label(set_frame, text="Format:", font=("YTSans 8"), bg="#282828", fg="white")
+        format_label.place(relx=0, rely=0.35)
+        format.place(relx=0.17, rely=0.5, anchor=tk.CENTER)
+        custom_button(0.4, 0.5, tk.CENTER, "DOWNLOAD", "#FF0000", "#282828", downloader)
 
         return image
     
@@ -59,7 +97,7 @@ def on_focusout(event):
 def downloader():
     while 0 < 1:
         global resolution
-        if link.get() == "":
+        if link.get() == "Enter URL":
             tkinter.messagebox.showerror("Error", "Please enter a valid link")
             break
         path = filedialog.askdirectory(title="Select Directory")
@@ -85,10 +123,9 @@ def downloader():
             video.download(path)
 
         confirmation = tk.Label(window, text="Download Successful!", font=("YTSans", 16), fg="#FF0000")
-        confirmation.place(relx=0.5, y=230, anchor=tk.CENTER)
+        confirmation.place(relx=0.5, rely=0.87, anchor=tk.CENTER)
         confirmation.configure(bg="#282828")
-        window.after(2800, confirmation.destroy)
-        entry.delete(0, tk.END)
+        window.after(3500, confirmation.destroy)
 
         break
 
@@ -101,7 +138,21 @@ def clearFrame():
 def creator_link(url):
     webbrowser.open_new(url)
 
-# Combobox etc.
+# Frames
+
+set_frame = tk.Frame(window, bg="#282828",highlightbackground="green")
+set_frame.place(relx=0.5, rely=0.8, anchor=tk.CENTER, width=425, height=65)
+
+inf_frame = tk.Frame(window, bg="#282828",highlightthickness=0.01)
+inf_frame.place(relx=0.5, rely=0.203, anchor=tk.CENTER,width=425,height=65)
+
+frame = tk.Frame(window,bg="#333333",width=600,height=60)
+frame.place(relx=0, rely=0)
+
+thumbnail = tk.Frame(window, bg="#282828",highlightbackground="red")
+thumbnail.place(relx=0.5, rely=0.5, anchor=tk.CENTER,width=425,height=239)
+
+# Combobox
 style = ttk.Style()
 style.theme_use('clam')
 window.option_add('*TCombobox*Listbox*Background', "#202020")
@@ -115,24 +166,12 @@ style.map('TCombobox', background=[('readonly', "#313131")])
 style.map('TCombobox', foreground=[('readonly', "#ffffff")])
 style.configure("TCombobox", lightcolor="#313131", darkcolor="#313131")
 
-set_frame = tk.Frame(window, bg="blue",highlightbackground="green")
-set_frame.place(relx=0.9, rely=0.5, anchor=tk.CENTER,width=65,height=250)
+format = ttk.Combobox(set_frame, state="readonly", values=["720p", "360p", ".mp3"],width=5)
 
-inf_frame = tk.Frame(window, bg="green",highlightthickness=0.01)
-inf_frame.place(relx=0.5, rely=0.203, anchor=tk.CENTER,width=400,height=65)
-
-format = ttk.Combobox(window, state="readonly", values=["720p", "360p", ".mp3"],width=5)
-format.place(relx=0.9, rely=0.4, anchor=tk.CENTER)
-
+# Entry etc.
 creator = tk.Label(window, text="Creator: DRKTRZY", fg="#d3d3d3", cursor="hand2", font=("YTSans 8 underline"),bg="#282828")
 creator.place(relx=0.835,rely=0.955)
 creator.bind("<Button-1>", lambda e: creator_link("https://github.com/DRKTRZY"))
-
-frame = tk.Canvas(window,bg="#333333",width=600,height=60,highlightbackground="#333333",highlightcolor="#333333")
-frame.place(relx=0,rely=0)
-
-thumbnail = tk.Frame(window, bg="red",highlightbackground="red")
-thumbnail.place(relx=0.5, rely=0.5, anchor=tk.CENTER,width=400,height=250)
 
 entry = tk.Entry(frame, width=70,fg = 'grey', textvariable=link, bg="#202020", font=("YTSans 12"))
 entry.insert(0, "Enter URL")
@@ -140,26 +179,11 @@ entry.bind("<FocusIn>", on_entry_click)
 entry.bind('<FocusOut>', on_focusout)
 entry.place(relx=0.42, rely=0.5, anchor=tk.CENTER,height=42,width=500)
 
-
-
-# Hover Button
-def custom_button(x, y,anchor,downloader):
-    image_a = ImageTk.PhotoImage(Image.open("resources/btn1.png"))
-    image_b = ImageTk.PhotoImage(Image.open("resources/btn2.png"))
-    def on_enter(e):
-        download_button["image"]=image_b
-
-    def on_leave(e):
-        download_button["image"]=image_a
-
-    download_button = tk.Button(window,image=image_a,border=0,background="#282828", cursor="hand2", command=downloader,relief=tk.SUNKEN)
-    download_button.bind("<Enter>", on_enter)
-    download_button.bind("<Leave>", on_leave)
-    download_button.place(relx=x, rely=y, anchor=anchor)
-
-custom_button(0.9, 0.4, tk.CENTER, downloader)
-custom_button(0.9, 0.5, tk.CENTER, test)
+search1 = ImageTk.PhotoImage(Image.open("resources/icon.png"))
+search = tk.Button(frame,image=search1,bg="#333333",activebackground="#333333",border=0,command=lambda:search_url(search))
+search.place(relx=0.87,rely=0.5,anchor=tk.CENTER)
 # Secret Sound
+window.bind("<Return>", (lambda event: search_url(event)))
 pygame.mixer.init()
 
 def jukebox(event):
@@ -176,3 +200,4 @@ window.bind("<Control-f>", jukebox)
 window.bind("<Control-s>", stop_music)
 
 window.mainloop()
+
