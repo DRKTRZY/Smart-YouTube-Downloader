@@ -33,12 +33,12 @@ def custom_button(x, y, anchor,text, bcolor, fcolor, downloader):
     download_button.place(relx=x, rely=y, anchor=anchor,width=100,height=30)
 
 def search_url(event):
+    clearFrame()
     while 0 < 1:
         global image
         global thumbnail
         global inf_frame
-        clearFrame()
-        if link.get() == "Enter URL":
+        if link.get() == "Enter URL" or None:
             tkinter.messagebox.showerror("Error", "Please enter a valid link")
             break
         url = YouTube(link.get()).thumbnail_url
@@ -100,13 +100,14 @@ def downloader():
         if link.get() == "Enter URL":
             tkinter.messagebox.showerror("Error", "Please enter a valid link")
             break
-        path = filedialog.askdirectory(title="Select Directory")
-        url = YouTube(str(link.get()))
-        if path == "":
-            break
 
         if format.get() == "":
             tkinter.messagebox.showerror("Error", "Please enter a valid format")
+            break
+
+        path = filedialog.askdirectory(title="Select Directory")
+        url = YouTube(str(link.get()))
+        if path == "":
             break
 
         elif format.get() == ".mp3":
@@ -134,6 +135,7 @@ def clearFrame():
         global thumbnail
         for widget in thumbnail.winfo_children():
             widget.destroy()
+
 
 def creator_link(url):
     webbrowser.open_new(url)
@@ -177,11 +179,11 @@ entry = tk.Entry(frame, width=70,fg = 'grey', textvariable=link, bg="#202020", f
 entry.insert(0, "Enter URL")
 entry.bind("<FocusIn>", on_entry_click)
 entry.bind('<FocusOut>', on_focusout)
-entry.place(relx=0.42, rely=0.5, anchor=tk.CENTER,height=42,width=500)
+entry.place(relx=0.43, rely=0.5, anchor=tk.CENTER,height=42,width=500)
 
 search1 = ImageTk.PhotoImage(Image.open("resources/icon.png"))
 search = tk.Button(frame,image=search1,bg="#333333",activebackground="#333333",border=0,command=lambda:search_url(search))
-search.place(relx=0.87,rely=0.5,anchor=tk.CENTER)
+search.place(relx=0.89,rely=0.5,anchor=tk.CENTER)
 # Secret Sound
 window.bind("<Return>", (lambda event: search_url(event)))
 pygame.mixer.init()
