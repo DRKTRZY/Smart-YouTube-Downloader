@@ -7,8 +7,8 @@ from PIL import ImageTk,Image
 # Window
 window = tk.Tk()
 window.geometry("595x540")
-
-window.title("SYD")
+window.resizable(0,0)
+window.title("SYD")   
 window.configure(bg="#282828")
 window.iconbitmap('resources/SYDApp.ico')
 
@@ -202,4 +202,3 @@ window.bind("<Control-f>", jukebox)
 window.bind("<Control-s>", stop_music)
 
 window.mainloop()
-
