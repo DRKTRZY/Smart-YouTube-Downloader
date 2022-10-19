@@ -8,7 +8,7 @@ from PIL import ImageTk,Image
 window = tk.Tk()
 window.geometry("595x540")
 window.resizable(0,0)
-window.title("SYD")   
+window.title("SYD")
 window.configure(bg="#282828")
 window.iconbitmap('resources/SYDApp.ico')
 
@@ -136,12 +136,10 @@ def clearFrame():
         for widget in thumbnail.winfo_children():
             widget.destroy()
 
-
 def creator_link(url):
     webbrowser.open_new(url)
 
 # Frames
-
 set_frame = tk.Frame(window, bg="#282828",highlightbackground="green")
 set_frame.place(relx=0.5, rely=0.8, anchor=tk.CENTER, relwidth=0.715, relheight=0.1)
 
@@ -184,6 +182,7 @@ entry.place(relx=0.43, rely=0.5, anchor=tk.CENTER,relheight=0.775,relwidth=0.85)
 search1 = ImageTk.PhotoImage(Image.open("resources/icon.png"))
 search = tk.Button(frame,image=search1,bg="#333333",activebackground="#333333",border=0,command=lambda:search_url(search))
 search.place(relx=0.89,rely=0.5,anchor=tk.CENTER,relwidth=0.06,relheight=0.6)
+
 # Secret Sound
 window.bind("<Return>", (lambda event: search_url(event)))
 pygame.mixer.init()
@@ -196,7 +195,6 @@ def jukebox(event):
 
 def stop_music(event):
     pygame.mixer.music.stop()
-
 
 window.bind("<Control-f>", jukebox)
 window.bind("<Control-s>", stop_music)
