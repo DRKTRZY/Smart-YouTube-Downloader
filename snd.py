@@ -1,6 +1,6 @@
-import pygame, random
-pygame.mixer.init()
+import pygame
 
+pygame.mixer.init()
 def jukebox(event):
     music = ["resources/sound/Flamewall.mp3", "resources/sound/pvrnormal.mp3", "resources/sound/Aa.mp3"]
     random_music = random.choice(music)
@@ -9,4 +9,3 @@ def jukebox(event):
 
 def stop_music(event):
     pygame.mixer.music.stop()
-
