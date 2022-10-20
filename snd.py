@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 
 pygame.mixer.init()
 def jukebox(event):
