@@ -1,8 +1,7 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/DRKTRZY/Smart-YouTube-Downloader/total) ![GitHub repo size](https://img.shields.io/github/repo-size/DRKTRZY/Smart-YouTube-Downloader?logo=GitHub) ![GitHub](https://img.shields.io/github/license/DRKTRZY/Smart-YouTube-Downloader?color=blue)
 
 # Smart YouTube Downloader
-This is my own YouTube Downloader . I'm still a beginner so it's not perfect and still has some not so good features or even has bugs.
-
+A simple YouTube Downloader with GUI and a video qualitiy up to 720p30fps
 
 ## Features
 - YouTube videos in good quality can be downloaded
