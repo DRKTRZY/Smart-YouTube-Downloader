@@ -4,7 +4,7 @@
 A simple YouTube Downloader with GUI and a video qualitiy up to 720p30fps
 
 ## Features
-- YouTube videos in good quality can be downloaded
+- YouTube videos up to 720p30fps can be downloaded
 - The possibility of downloading MP4s, MP3s
 - Free to Use
 - With a simple graphical user interface
